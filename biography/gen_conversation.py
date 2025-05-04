@@ -1,5 +1,9 @@
 import json
-import openai
+from openai import OpenAI
+
+# OpenAI object with key and server url
+client = OpenAI(api_key="EMPTY",  
+        base_url="http://localhost:8000/v1")
 import random
 from tqdm import tqdm
 
@@ -48,11 +52,13 @@ def construct_message(agents, idx, person, final=False):
 
 
 def construct_assistant_message(completion):
-    content = completion["choices"][0]["message"]["content"]
+    # Editted way of grabbing the conversation content 
+    content = completion.choices[0].message.content
     return {"role": "assistant", "content": content}
 
 
 if __name__ == "__main__":
+    # Open dataset here 
     with open("article.json", "r") as f:
         data = json.load(f)
 
@@ -83,21 +89,20 @@ if __name__ == "__main__":
                     agent_context.append(message)
 
                 try:
-                    completion = openai.ChatCompletion.create(
-                              model="gpt-3.5-turbo-0301",
-                              messages=agent_context,
-                              n=1)
+                    # Using VLLM model 
+                    completion = client.chat.completions.create(model="Qwen/Qwen2.5-1.5B-Instruct",
+                    messages=agent_context,
+                    n=1)
                 except:
-                    completion = openai.ChatCompletion.create(
-                              model="gpt-3.5-turbo-0301",
-                              messages=agent_context,
-                              n=1)
+                    completion = client.chat.completions.create(model="Qwen/Qwen2.5-1.5B-Instruct",
+                    messages=agent_context,
+                    n=1)
 
                 print(completion)
                 assistant_message = construct_assistant_message(completion)
                 agent_context.append(assistant_message)
 
-            bullets = parse_bullets(completion["choices"][0]['message']['content'])
+            bullets = parse_bullets(completion.choices[0].message.content)
 
             # The LM just doesn't know this person so no need to create debates
             if len(bullets) == 1:

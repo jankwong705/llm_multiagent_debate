@@ -1,4 +1,8 @@
-import openai
+from openai import OpenAI
+
+# OpenAI object with key and server url
+client = OpenAI(api_key="EMPTY",  
+        base_url="http://localhost:8000/v1")
 import json
 import numpy as np
 import random
@@ -20,7 +24,8 @@ def construct_message(agents, question, idx):
 
 
 def construct_assistant_message(completion):
-    content = completion["choices"][0]["message"]["content"]
+    # Editted way of grabbing the conversation content 
+    content = completion.choices[0].message.content
     return {"role": "assistant", "content": content}
 
 
@@ -34,8 +39,8 @@ if __name__ == "__main__":
     random.seed(0)
 
     generated_description = {}
-
-    questions = read_jsonl("/data/vision/billf/scratch/yilundu/llm_iterative_debate/grade-school-math/grade_school_math/data/test.jsonl")
+    # Open dataset here 
+    questions = read_jsonl("test.jsonl")
     random.shuffle(questions)
 
     for data in questions[:100]:
@@ -52,10 +57,10 @@ if __name__ == "__main__":
                     message = construct_message(agent_contexts_other, question, 2*round - 1)
                     agent_context.append(message)
 
-                completion = openai.ChatCompletion.create(
-                          model="gpt-3.5-turbo-0301",
-                          messages=agent_context,
-                          n=1)
+                # Using VLLM model 
+                completion = client.chat.completions.create(model="Qwen/Qwen2.5-1.5B-Instruct",
+                messages=agent_context,
+                n=1)
 
                 assistant_message = construct_assistant_message(completion)
                 agent_context.append(assistant_message)

@@ -3,7 +3,11 @@ import pandas as pd
 import json
 import time
 import random
-import openai
+from openai import OpenAI
+
+# OpenAI object with key and server url
+client = OpenAI(api_key="EMPTY",  
+        base_url="http://localhost:8000/v1")
 
 def construct_message(agents, question, idx):
     if len(agents) == 0:
@@ -22,16 +26,16 @@ def construct_message(agents, question, idx):
 
 
 def construct_assistant_message(completion):
-    content = completion["choices"][0]["message"]["content"]
+    content = completion.choices[0].message.content
     return {"role": "assistant", "content": content}
 
 
 def generate_answer(answer_context):
     try:
-        completion = openai.ChatCompletion.create(
-                  model="gpt-3.5-turbo-0301",
-                  messages=answer_context,
-                  n=1)
+        # Using VLLM Model 
+        completion = client.chat.completions.create(model="Qwen/Qwen2.5-1.5B-Instruct",
+        messages=answer_context,
+        n=1)
     except:
         print("retrying due to an error......")
         time.sleep(20)
@@ -57,7 +61,8 @@ if __name__ == "__main__":
     agents = 3
     rounds = 2
 
-    tasks = glob("/data/vision/billf/scratch/yilundu/llm_iterative_debate/mmlu/data/test/*.csv")
+    # Open dataset here 
+    tasks = glob("test/*.csv")
 
     dfs = [pd.read_csv(task) for task in tasks]
 

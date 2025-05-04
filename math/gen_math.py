@@ -1,4 +1,8 @@
-import openai
+from openai import OpenAI
+
+# OpenAI object with key and server url
+client = OpenAI(api_key="EMPTY",  
+        base_url="http://localhost:8000/v1")
 import json
 import numpy as np
 import time
@@ -25,10 +29,11 @@ def parse_bullets(sentence):
 
 def generate_answer(answer_context):
     try:
-        completion = openai.ChatCompletion.create(
-                  model="gpt-3.5-turbo-0301",
-                  messages=answer_context,
-                  n=1)
+        completion = client.chat.completions.create(
+            # Using VLLM model 
+            model="Qwen/Qwen2.5-1.5B-Instruct",
+            messages=answer_context,
+            n=1)
     except:
         print("retrying due to an error......")
         time.sleep(20)
@@ -56,7 +61,7 @@ def construct_message(agents, question, idx):
 
 
 def construct_assistant_message(completion):
-    content = completion["choices"][0]["message"]["content"]
+    content = completion.choices[0].message.content
     return {"role": "assistant", "content": content}
 
 def parse_answer(sentence):
