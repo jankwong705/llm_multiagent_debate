@@ -1,7 +1,8 @@
 import json
 from openai import OpenAI
 
-client = OpenAI()
+client = OpenAI(api_key="EMPTY",  
+        base_url="http://localhost:8000/v1")
 import numpy as np
 import time
 
@@ -51,7 +52,7 @@ def filter_people(person):
     return people
 
 if __name__ == "__main__":
-    response = json.load(open("biography_1_2.json", "r"))
+    response = json.load(open("biography_3_2.json", "r"))
 
     with open("article.json", "r") as f:
         gt_data = json.load(f)
@@ -93,7 +94,7 @@ if __name__ == "__main__":
                 message = [{"role": "user", "content": "Consider the following biography of {}: \n {} \n\n Is the above biography above consistent with the fact below? \n\n {} \n Give a single word answer, yes, no, or uncertain. Carefully check the precise dates and locations between the fact and the above biography.".format(person, bio_bullets, bullet)}]
 
                 try:
-                    completion = client.chat.completions.create(model="gpt-3.5-turbo-0301",
+                    completion = client.chat.completions.create(model="Qwen/Qwen2.5-1.5B-Instruct",
                     messages=message,
                     n=1)
                 except Exception as e:
