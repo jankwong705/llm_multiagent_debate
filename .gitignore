@@ -1,3 +1,5 @@
 gsm/test.jsonl
 mmlu/test
 *.sh
+*.sqlite
+.DS_Store
