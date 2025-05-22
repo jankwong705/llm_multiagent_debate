@@ -7,6 +7,8 @@ import json
 import numpy as np
 import random
 
+MODEL = "Qwen/Qwen2.5-7B-Instruct"
+
 def construct_message(agents, question, idx):
     if len(agents) == 0:
         return {"role": "user", "content": "Can you double check that your answer is correct. Please reiterate your answer, with your final answer a single numerical number, in the form \\boxed{{answer}}."}
@@ -58,7 +60,7 @@ if __name__ == "__main__":
                     agent_context.append(message)
 
                 # Using VLLM model 
-                completion = client.chat.completions.create(model="Qwen/Qwen2.5-3B-Instruct",
+                completion = client.chat.completions.create(model=MODEL,
                 messages=agent_context,
                 n=1)
 

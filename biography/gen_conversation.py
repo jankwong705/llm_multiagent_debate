@@ -7,6 +7,8 @@ client = OpenAI(api_key="EMPTY",
 import random
 from tqdm import tqdm
 
+MODEL = "Qwen/Qwen2.5-7B-Instruct"
+
 def parse_bullets(sentence):
     bullets_preprocess = sentence.split("\n")
     bullets = []
@@ -90,11 +92,11 @@ if __name__ == "__main__":
 
                 try:
                     # Using VLLM model 
-                    completion = client.chat.completions.create(model="Qwen/Qwen2.5-3B-Instruct",
+                    completion = client.chat.completions.create(model=MODEL,
                     messages=agent_context,
                     n=1)
                 except:
-                    completion = client.chat.completions.create(model="Qwen/Qwen2.5-3B-Instruct",
+                    completion = client.chat.completions.create(model=MODEL,
                     messages=agent_context,
                     n=1)
 

@@ -9,6 +9,8 @@ import time
 import pickle
 from tqdm import tqdm
 
+MODEL = "Qwen/Qwen2.5-7B-Instruct"
+
 def parse_bullets(sentence):
     bullets_preprocess = sentence.split("\n")
     bullets = []
@@ -31,7 +33,7 @@ def generate_answer(answer_context):
     try:
         completion = client.chat.completions.create(
             # Using VLLM model 
-            model="Qwen/Qwen2.5-3B-Instruct",
+            model=MODEL,
             messages=answer_context,
             n=1)
     except:

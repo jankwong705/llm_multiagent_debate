@@ -5,6 +5,7 @@ import time
 import random
 from openai import OpenAI
 
+MODEL = "Qwen/Qwen2.5-7B-Instruct"
 # OpenAI object with key and server url
 client = OpenAI(api_key="EMPTY",  
         base_url="http://localhost:8000/v1")
@@ -33,7 +34,7 @@ def construct_assistant_message(completion):
 def generate_answer(answer_context):
     try:
         # Using VLLM Model 
-        completion = client.chat.completions.create(model="Qwen/Qwen2.5-3B-Instruct",
+        completion = client.chat.completions.create(model=MODEL,
         messages=answer_context,
         n=1)
     except:
