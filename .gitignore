@@ -3,3 +3,4 @@ mmlu/test
 *.sh
 *.sqlite
 .DS_Store
+start_vllm.sh

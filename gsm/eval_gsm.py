@@ -3,7 +3,7 @@ import openai
 import numpy as np
 import time
 import re
-import pandas as pd 
+import csv 
 
 def parse_bullets(sentence):
     bullets_preprocess = sentence.split("\n")
@@ -125,7 +125,7 @@ if __name__ == "__main__":
     questions = list(response_dict.keys())
 
     accuracies = []
-
+    
     for question in questions:
         responses, gt = response_dict[question]
 
@@ -143,6 +143,6 @@ if __name__ == "__main__":
             import pdb
             pdb.set_trace()
             print(gt)
-
+        # continuous calculations of mean accuracy and standard error of mean accuracy 
         print("accuracies:", np.mean(accuracies), np.std(accuracies) / (len(accuracies) ** 0.5))
 

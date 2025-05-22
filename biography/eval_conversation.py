@@ -94,7 +94,7 @@ if __name__ == "__main__":
                 message = [{"role": "user", "content": "Consider the following biography of {}: \n {} \n\n Is the above biography above consistent with the fact below? \n\n {} \n Give a single word answer, yes, no, or uncertain. Carefully check the precise dates and locations between the fact and the above biography.".format(person, bio_bullets, bullet)}]
 
                 try:
-                    completion = client.chat.completions.create(model="Qwen/Qwen2.5-3B-Instruct",
+                    completion = client.chat.completions.create(model="Qwen/Qwen2.5-1.5B-Instruct",
                     messages=message,
                     n=1)
                 except Exception as e:
