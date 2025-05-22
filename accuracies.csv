@@ -1,2 +1,2 @@
-model,biography,gsm,mmlu
-Qwen/Qwen2.5-1.5B-Instruct,0.4199623352165725,0.69,0.31
+model,biography,math,gsm,mmlu
+Qwen/Qwen2.5-1.5B-Instruct,0.4066037735849057,0.39,0.7,0.34

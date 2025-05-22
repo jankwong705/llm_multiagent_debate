@@ -6,7 +6,7 @@ client = OpenAI(api_key="EMPTY",
 import numpy as np
 import time
 
-MODEL = "Qwen/Qwen2.5-7B-Instruct"
+MODEL = ""
 
 def parse_bullets(sentence):
     bullets_preprocess = sentence.split("\n")

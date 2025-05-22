@@ -24,23 +24,25 @@ data_dict = {"biography": ["gen_conversation.py", "eval_conversation.py"],
 
 # gen a bunch of results 
 # for each, run eval
-for model in models_to_run:
-    for path, eval_file in data_dict.items():
-        with chdir(path):
-            print("Running: " + path)
-            if path != "math":
-                runpy.run_path(eval_file[0], run_name="__main__", init_globals={"MODEL": model})
+# for model in models_to_run:
+model = models_to_run[0]
+for path, eval_file in data_dict.items():
+    with chdir(path):
+        print("Running: " + path)
+        if path != "math":
+            # runpy.run_path(eval_file[0], run_name="__main__", init_globals={"MODEL": model})
             print("Evaluating: " + path)
             mean_acc = np.mean(runpy.run_path(eval_file[1], run_name="__main__", init_globals={"MODEL": model}).get('accuracies'))
-            if path == "math":
-                mean_acc = np.mean(runpy.run_path(eval_file[0], run_name="__main__", init_globals={"MODEL": model}).get('scores'))
-        print("Appending mean accuracy...")
-        data_dict[path].append(mean_acc)
+        elif path == "math":
+            print("Evaluating: " + path)
+            mean_acc = np.mean(runpy.run_path(eval_file[0], run_name="__main__", init_globals={"MODEL": model}).get('scores'))
+    print("Appending mean accuracy...")
+    data_dict[path].append(mean_acc)
 
-    acc_list = [model] + [float(i[2]) for i in data_dict.values()]
+acc_list = [model] + [float(i[-1]) for i in data_dict.values()]
 
-    print("Writing to CSV")
-    with open("accuracies.csv", "w", newline="") as f:
-        writer = csv.writer(f)
-        row_to_write = [acc_list]
-        writer.writerows(row_to_write)
+print("Writing to CSV")
+with open("accuracies.csv", "w", newline="") as f:
+    writer = csv.writer(f)
+    row_to_write = [acc_list]
+    writer.writerows(row_to_write)

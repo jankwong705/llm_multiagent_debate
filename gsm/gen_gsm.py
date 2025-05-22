@@ -7,7 +7,7 @@ import json
 import numpy as np
 import random
 
-MODEL = "Qwen/Qwen2.5-7B-Instruct"
+MODEL = ""
 
 def construct_message(agents, question, idx):
     if len(agents) == 0:
@@ -72,6 +72,6 @@ if __name__ == "__main__":
     json.dump(generated_description, open("gsm_{}_{}.json".format(agents, rounds), "w"))
 
     import pdb
-    pdb.set_trace()
+    # pdb.set_trace()
     print(answer)
     print(agent_context)
