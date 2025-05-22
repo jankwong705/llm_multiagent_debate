@@ -3,6 +3,7 @@ import openai
 import numpy as np
 import time
 import re
+import pandas as pd 
 
 def parse_bullets(sentence):
     bullets_preprocess = sentence.split("\n")

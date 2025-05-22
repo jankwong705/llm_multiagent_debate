@@ -90,11 +90,11 @@ if __name__ == "__main__":
 
                 try:
                     # Using VLLM model 
-                    completion = client.chat.completions.create(model="Qwen/Qwen2.5-1.5B-Instruct",
+                    completion = client.chat.completions.create(model="Qwen/Qwen2.5-3B-Instruct",
                     messages=agent_context,
                     n=1)
                 except:
-                    completion = client.chat.completions.create(model="Qwen/Qwen2.5-1.5B-Instruct",
+                    completion = client.chat.completions.create(model="Qwen/Qwen2.5-3B-Instruct",
                     messages=agent_context,
                     n=1)
 

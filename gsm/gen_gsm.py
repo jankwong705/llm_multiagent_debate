@@ -58,7 +58,7 @@ if __name__ == "__main__":
                     agent_context.append(message)
 
                 # Using VLLM model 
-                completion = client.chat.completions.create(model="Qwen/Qwen2.5-1.5B-Instruct",
+                completion = client.chat.completions.create(model="Qwen/Qwen2.5-3B-Instruct",
                 messages=agent_context,
                 n=1)
 

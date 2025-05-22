@@ -31,7 +31,7 @@ def generate_answer(answer_context):
     try:
         completion = client.chat.completions.create(
             # Using VLLM model 
-            model="Qwen/Qwen2.5-1.5B-Instruct",
+            model="Qwen/Qwen2.5-3B-Instruct",
             messages=answer_context,
             n=1)
     except:
