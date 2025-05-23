@@ -7,7 +7,7 @@ client = OpenAI(api_key="EMPTY",
 import random
 from tqdm import tqdm
 
-MODEL = ""
+MODEL = "Qwen/Qwen3-4B"
 
 def parse_bullets(sentence):
     bullets_preprocess = sentence.split("\n")

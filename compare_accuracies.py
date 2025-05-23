@@ -11,7 +11,9 @@ models_to_run = [#"Qwen/Qwen2.5-1.5B-Instruct",
     #"Qwen/Qwen2.5-3B-Instruct", 
     #"Qwen/Qwen2.5-7B-Instruct", 
     #"Qwen/Qwen2.5-14B-Instruct", #14B: out of mem
-    "meta-llama/Llama-3.1-8B",
+    "Qwen/Qwen3-4B",
+    "Qwen/Qwen3-8B", #does not work 
+    #"meta-llama/Llama-3.1-8B" #does not work 
     ]    
 
 # "meta-llama/Llama-3.1-8B"

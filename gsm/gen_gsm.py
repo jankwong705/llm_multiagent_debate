@@ -7,7 +7,7 @@ import json
 import numpy as np
 import random
 
-MODEL = ""
+MODEL = "Qwen/Qwen3-4B"
 
 def construct_message(agents, question, idx):
     if len(agents) == 0:

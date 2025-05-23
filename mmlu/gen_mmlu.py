@@ -5,7 +5,7 @@ import time
 import random
 from openai import OpenAI
 
-MODEL = ""
+MODEL = "Qwen/Qwen3-4B"
 # OpenAI object with key and server url
 client = OpenAI(api_key="EMPTY",  
         base_url="http://localhost:8000/v1")

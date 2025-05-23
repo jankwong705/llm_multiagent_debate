@@ -9,7 +9,7 @@ import time
 import pickle
 from tqdm import tqdm
 
-MODEL = ""
+MODEL = "Qwen/Qwen3-4B"
 
 def parse_bullets(sentence):
     bullets_preprocess = sentence.split("\n")
@@ -155,5 +155,6 @@ if __name__ == "__main__":
     pickle.dump(generated_description, open("math_agents{}_rounds{}.p".format(agents, rounds), "wb"))
     import pdb
     # pdb.set_trace()
+    print(np.mean(scores))
     print(answer)
     print(agent_context)
