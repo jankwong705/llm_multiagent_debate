@@ -31,7 +31,7 @@ def parse_bullets(sentence):
 
 def generate_answer(answer_context):
     try:
-        completion = client.chat.completions.create(
+        completion = client.chat.completions.create(    # TOKENS
             # Using VLLM model 
             model=MODEL,
             messages=answer_context,

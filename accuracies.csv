@@ -2,3 +2,4 @@ model,biography,math,gsm,mmlu
 paper,0.74,0.82,0.85,0.71
 Qwen/Qwen2.5-1.5B-Instruct,0.4066037735849057,0.39,0.7,0.34
 Qwen/Qwen2.5-3B-Instruct,0.26753670473083196,0.0,0.8,0.55
+Qwen/Qwen2.5-7B-Instruct,0.21371428571428572,0.0,0.89,0.6
