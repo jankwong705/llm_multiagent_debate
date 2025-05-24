@@ -36,12 +36,15 @@ def generate_answer(answer_context):
             model=MODEL,
             messages=answer_context,
             n=1)
+        tokens_sent     = completion.usage.prompt_tokens
+        tokens_received = completion.usage.completion_tokens
+        total_tokens      = completion.usage.total_tokens
     except:
         print("retrying due to an error......")
         time.sleep(20)
         return generate_answer(answer_context)
 
-    return completion
+    return completion, tokens_sent, tokens_received, total_tokens # NEED CHANGE OTHERSSSS
 
 
 def construct_message(agents, question, idx):
