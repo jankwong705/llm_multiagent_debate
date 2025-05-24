@@ -6,6 +6,7 @@ client = OpenAI(api_key="EMPTY",
 import json
 import numpy as np
 import random
+from tqdm import tqdm
 
 MODEL = "Qwen/Qwen3-4B"
 
@@ -47,7 +48,7 @@ if __name__ == "__main__":
 
     tokens_sent_received = []   # [(tokens_sent, tokens_received),...]
 
-    for data in questions[:100]:
+    for data in tqdm(questions[:100]):
         question = data['question']
         answer = data['answer']
 
