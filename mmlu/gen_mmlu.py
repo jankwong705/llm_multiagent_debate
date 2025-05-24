@@ -35,14 +35,16 @@ def generate_answer(answer_context):
     try:
         # Using VLLM Model 
         completion = client.chat.completions.create(model=MODEL,
-        messages=answer_context,
-        n=1)
+            messages=answer_context,
+            n=1)
+        tokens_sent = completion.usage.prompt_tokens
+        tokens_received = completion.usage.completion_tokens
     except:
         print("retrying due to an error......")
         time.sleep(20)
         return generate_answer(answer_context)
 
-    return completion
+    return completion, tokens_sent, tokens_received
 
 
 def parse_question_answer(df, ix):
@@ -69,6 +71,7 @@ if __name__ == "__main__":
 
     random.seed(0)
     response_dict = {}
+    tokens_sent_received = []   # [(tokens_sent, tokens_received),...]
 
     for i in range(100):
         df = random.choice(dfs)
@@ -87,11 +90,13 @@ if __name__ == "__main__":
                     message = construct_message(agent_contexts_other, question, 2 * round - 1)
                     agent_context.append(message)
 
-                completion = generate_answer(agent_context)
+                completion, tokens_sent, tokens_received = generate_answer(agent_context)
 
                 assistant_message = construct_assistant_message(completion)
                 agent_context.append(assistant_message)
                 print(completion)
+
+                tokens_sent_received.append((tokens_sent, tokens_received))
 
         response_dict[question] = (agent_contexts, answer)
 

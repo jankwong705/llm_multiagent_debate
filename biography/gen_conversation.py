@@ -73,7 +73,7 @@ if __name__ == "__main__":
     rounds = 2
 
     generated_description = {}
-
+    tokens_sent_received = []   # [(tokens_sent, tokens_received),...]
 
     for person in tqdm(people[:40]):
         agent_contexts = [[{"role": "user", "content": "Give a bullet point biography of {} highlighting their contributions and achievements as a computer scientist, with each fact separated with a new line character. ".format(person)}] for agent in range(agents)]
@@ -93,16 +93,23 @@ if __name__ == "__main__":
                 try:
                     # Using VLLM model 
                     completion = client.chat.completions.create(model=MODEL,
-                    messages=agent_context,
-                    n=1)
+                        messages=agent_context,
+                        n=1)
+                    
+                    tokens_sent = completion.usage.prompt_tokens
+                    tokens_received = completion.usage.completion_tokens
                 except:
                     completion = client.chat.completions.create(model=MODEL,
-                    messages=agent_context,
-                    n=1)
+                        messages=agent_context,
+                        n=1)
+                    
+                    tokens_sent = completion.usage.prompt_tokens
+                    tokens_received = completion.usage.completion_tokens
 
                 print(completion)
                 assistant_message = construct_assistant_message(completion)
                 agent_context.append(assistant_message)
+                tokens_sent_received.append((tokens_sent, tokens_received))
 
             bullets = parse_bullets(completion.choices[0].message.content)
 

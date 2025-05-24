@@ -36,15 +36,14 @@ def generate_answer(answer_context):
             model=MODEL,
             messages=answer_context,
             n=1)
-        tokens_sent     = completion.usage.prompt_tokens
+        tokens_sent = completion.usage.prompt_tokens
         tokens_received = completion.usage.completion_tokens
-        total_tokens      = completion.usage.total_tokens
     except:
         print("retrying due to an error......")
         time.sleep(20)
         return generate_answer(answer_context)
 
-    return completion, tokens_sent, tokens_received, total_tokens # NEED CHANGE OTHERSSSS
+    return completion, tokens_sent, tokens_received
 
 
 def construct_message(agents, question, idx):
@@ -102,6 +101,7 @@ if __name__ == "__main__":
 
     evaluation_round = 100
     scores = []
+    tokens_sent_received = []   # [(tokens_sent, tokens_received),...]
 
     generated_description = {}
 
@@ -124,8 +124,9 @@ if __name__ == "__main__":
 
                     print("message: ", message)
 
-                completion = generate_answer(agent_context)
+                completion, tokens_sent, tokens_received = generate_answer(agent_context)
 
+                tokens_sent_received.append((tokens_sent, tokens_received))
                 assistant_message = construct_assistant_message(completion)
                 agent_context.append(assistant_message)
                 print(completion)

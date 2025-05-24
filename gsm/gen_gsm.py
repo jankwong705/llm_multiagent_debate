@@ -45,6 +45,8 @@ if __name__ == "__main__":
     questions = read_jsonl("test.jsonl")
     random.shuffle(questions)
 
+    tokens_sent_received = []   # [(tokens_sent, tokens_received),...]
+
     for data in questions[:100]:
         question = data['question']
         answer = data['answer']
@@ -61,11 +63,16 @@ if __name__ == "__main__":
 
                 # Using VLLM model 
                 completion = client.chat.completions.create(model=MODEL,
-                messages=agent_context,
-                n=1)
+                    messages=agent_context,
+                    n=1)
+                
+                tokens_sent = completion.usage.prompt_tokens
+                tokens_received = completion.usage.completion_tokens
 
                 assistant_message = construct_assistant_message(completion)
                 agent_context.append(assistant_message)
+
+                tokens_sent_received.append((tokens_sent, tokens_received))
 
         generated_description[question] = (agent_contexts, answer)
 
