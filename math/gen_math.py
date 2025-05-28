@@ -9,7 +9,7 @@ import time
 import pickle
 from tqdm import tqdm
 
-MODEL = "Qwen/Qwen3-4B"
+MODEL = "deepseek-ai/DeepSeek-R1-Distill-Llama-8B"
 
 def parse_bullets(sentence):
     bullets_preprocess = sentence.split("\n")
