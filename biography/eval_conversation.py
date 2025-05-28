@@ -1,5 +1,6 @@
 import json
 from openai import OpenAI
+from tqdm import tqdm
 
 client = OpenAI(api_key="EMPTY",  
         base_url="http://localhost:8000/v1")
@@ -71,7 +72,7 @@ if __name__ == "__main__":
 
     accuracies = []
 
-    for person in people:
+    for person in tqdm(people):
 
         if person not in gt_data:
             continue
@@ -104,10 +105,10 @@ if __name__ == "__main__":
                     time.sleep(20)
                     continue
 
-                print(message)
+                # print(message)
 
                 content = completion.choices[0].message.content
-                print(content)
+                # print(content)
                 accurate = parse_yes_no(content)
 
                 if accurate is not None:

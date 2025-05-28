@@ -106,7 +106,7 @@ if __name__ == "__main__":
                     tokens_sent = completion.usage.prompt_tokens
                     tokens_received = completion.usage.completion_tokens
 
-                print(completion)
+                # print(completion)
                 assistant_message = construct_assistant_message(completion)
                 agent_context.append(assistant_message)
                 tokens_sent_received.append((tokens_sent, tokens_received))
@@ -118,6 +118,6 @@ if __name__ == "__main__":
                 break
 
         generated_description[person] = agent_contexts
-
+    print(tokens_sent_received)
     json.dump(generated_description, open("biography_{}_{}.json".format(agents, rounds), "w"))
 

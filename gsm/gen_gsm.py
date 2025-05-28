@@ -78,8 +78,8 @@ if __name__ == "__main__":
         generated_description[question] = (agent_contexts, answer)
 
     json.dump(generated_description, open("gsm_{}_{}.json".format(agents, rounds), "w"))
-
+    print(tokens_sent_received)
     import pdb
     # pdb.set_trace()
-    print(answer)
-    print(agent_context)
+    # print(answer)
+    # print(agent_context)

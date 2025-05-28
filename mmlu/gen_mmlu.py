@@ -4,6 +4,7 @@ import json
 import time
 import random
 from openai import OpenAI
+from tqdm import tqdm
 
 MODEL = "Qwen/Qwen3-4B"
 # OpenAI object with key and server url
@@ -73,7 +74,7 @@ if __name__ == "__main__":
     response_dict = {}
     tokens_sent_received = []   # [(tokens_sent, tokens_received),...]
 
-    for i in range(100):
+    for i in tqdm(range(100)):
         df = random.choice(dfs)
         ix = len(df)
         idx = random.randint(0, ix-1)
@@ -94,10 +95,10 @@ if __name__ == "__main__":
 
                 assistant_message = construct_assistant_message(completion)
                 agent_context.append(assistant_message)
-                print(completion)
+                # print(completion)
 
                 tokens_sent_received.append((tokens_sent, tokens_received))
 
         response_dict[question] = (agent_contexts, answer)
-
+    print(tokens_sent_received)
     json.dump(response_dict, open("mmlu_{}_{}.json".format(agents, rounds), "w"))
