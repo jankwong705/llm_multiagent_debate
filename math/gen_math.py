@@ -122,14 +122,14 @@ if __name__ == "__main__":
                     message = construct_message(agent_contexts_other, question_prompt, 2*round - 1)
                     agent_context.append(message)
 
-                    print("message: ", message)
+                    # print("message: ", message)
 
                 completion, tokens_sent, tokens_received = generate_answer(agent_context)
 
                 tokens_sent_received.append((tokens_sent, tokens_received))
                 assistant_message = construct_assistant_message(completion)
                 agent_context.append(assistant_message)
-                print(completion)
+                # print(completion)
 
         text_answers = []
 
@@ -160,5 +160,6 @@ if __name__ == "__main__":
     import pdb
     # pdb.set_trace()
     print(np.mean(scores))
+    print(tokens_sent_received)
     print(answer)
     print(agent_context)
